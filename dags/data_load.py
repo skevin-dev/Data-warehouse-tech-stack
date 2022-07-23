@@ -23,6 +23,8 @@ def insert_data():
     postgres_hook  = PostgresHook(postgres_conn_id="postgres_local")
     engine  = postgres_hook.get_sqlalchemy_engine()
     df = pd.read_csv("/opt/airflow/data/20181024_d1_0830_0900.csv", sep='[,;:]', index_col=False)
+    new_columns =['track_id','type','traveled_d','avg_speed','lat','lon','speed','lon_acc','lat_acc','time']
+    df.columns = new_columns
 
     df.to_sql("traffic_table_",con=engine,if_exists="replace",index_label='id')
     print('completed')
